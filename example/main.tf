@@ -35,8 +35,8 @@ module "aggregated_policy" {
   source = "../"
 
   source_documents = [
-    "${data.aws_iam_policy_document.base.json}",
-    "${data.aws_iam_policy_document.resource_full_access.json}",
+    data.aws_iam_policy_document.base.json,
+    data.aws_iam_policy_document.resource_full_access.json,
   ]
 }
 
@@ -48,6 +48,6 @@ resource "aws_iam_role" "default" {
 resource "aws_iam_role_policy" "default" {
   name        = "example-policy"
   description = "Allow S3 actions"
-  role        = "${aws_iam_role.default.id}"
-  policy      = "${module.aggregated_policy.result_document}"
+  role        = aws_iam_role.default.id
+  policy      = module.aggregated_policy.result_document
 }
